@@ -1,0 +1,35 @@
+{
+    "posts": [
+      {
+        "slug": "react-hooks-intro",
+        "title": "React Hooks 入门指南",
+        "img": "https://example.com/images/react-hooks.jpg",
+        "link": "/articles/react-hooks-intro",
+        "description": "这篇文章介绍了 React Hooks 的基本用法，包括 useState 和 useEffect。",
+        "category": "前端",
+        "date": "2025-12-15",
+        "content": "React Hooks 是 React 16.8 引入的新特性。\n\nuseState 用于在函数组件中管理状态，useEffect 用于处理副作用，如数据请求、订阅等。"
+      },
+      {
+        "slug": "ts-useState",
+        "title": "TypeScript 与 useState 实战",
+        "img": "https://example.com/images/ts-usestate.jpg",
+        "link": "/articles/ts-useState",
+        "description": "讲解如何在 TypeScript 中使用 React 的 useState，以及类型定义方法。",
+        "category": "前端",
+        "date": "2025-12-16",
+        "content": "在 TypeScript 中，如果不为 useState 指定类型，可能会被推断为 never。\n\n合理的类型定义可以提升代码可维护性。"
+      },
+      {
+        "slug": "ui-design-basics",
+        "title": "UI 设计基础知识",
+        "img": "https://example.com/images/ui-design.jpg",
+        "link": "/articles/ui-design-basics",
+        "description": "从视觉、排版和交互角度讲解 UI 设计的基础概念。",
+        "category": "设计",
+        "date": "2025-12-12",
+        "content": "UI 设计关注的是用户与产品之间的交互体验。\n\n良好的排版和视觉层级可以显著提升用户体验。"
+      }
+    ]
+  }
+  

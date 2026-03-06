@@ -1,0 +1,78 @@
+﻿.hero{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  background-image: url('../assets/imgs/hero.jpg');
+    background-size: cover;
+    background-position: center 95%;
+
+    &::after{
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(235, 229, 229, 0.45);
+    }
+
+    .heroContent{
+        z-index: 10;
+        position: relative;//relative 鏈韩涓嶁€滆嚜鍔ㄦ渶涓婂眰鈥濓紝浣嗗畠鍒涘缓瀹氫綅涓婁笅鏂囷紝浣?z-index 鐢熸晥锛屽悓鏃跺湪娌℃湁 z-index 鏃讹紝鍐呭灞傛瘮 ::after 楂橈紝鎵€浠ユ枃瀛楀湪鏈€涓婂眰銆?
+    }
+}
+
+.heroContent{
+    position: relative;
+    max-width: 600px;
+}
+
+.heroTitle{
+    font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.heroDescription{
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cta {
+    font-size: 2rem;
+    color: aqua;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.1);
+      color: lightblue;
+    }
+  
+    &:active {
+      transform: scale(0.95);
+      outline: none;         /* 鐐瑰嚮鏃朵篃鍘绘帀 */
+      box-shadow: none;      /* 闃叉鐐瑰嚮楂樹寒闃村奖 */
+    }
+
+    &:focus {
+        outline: none;         /* 閿洏鑱氱劍鏃朵篃鍘绘帀 */
+      }
+  
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  }
+
+  .bunny{
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    left: 400px;
+    bottom: 200px;
+    z-index: 10;
+    image-rendering: pixelated;
+  }

@@ -1,0 +1,76 @@
+﻿.categorySection {
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  background: #fff;
+  padding: 18px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.carouselSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carouselWrapper {
+  width: 500px;
+  max-width: calc(100% - 80px);
+  overflow: hidden;
+}
+
+.carouselTrack {
+  display: flex;
+}
+
+.categoryCard {
+  width: 250px;
+  height: 170px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid #e8e8e8;
+  background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+  color: #111827;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.prev {
+  left: 6px;
+}
+
+.next {
+  right: 6px;
+}
+
+@media (max-width: 640px) {
+  .categoryCard {
+    height: 140px;
+    font-size: 20px;
+  }
+
+  .carouselWrapper {
+    max-width: calc(100% - 56px);
+  }
+}

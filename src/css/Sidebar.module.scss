@@ -1,0 +1,53 @@
+.sidebar {
+    width: 200px;
+    height: 400px;
+    background-color: lightblue;
+    transition: width 0.5s ease-in-out;
+    overflow: hidden;
+    position: fixed;
+    top: 200px;
+    left: 0;
+    z-index: 1000;
+
+    &.open {
+        width: 200px;
+
+        .menu {
+            display: block;
+        }
+    }
+
+    &.collapsed {
+        width: 90px;
+        background-color: transparent;
+
+        .menu {
+            display: none;
+        }
+    }
+}
+
+.toggleBtn {
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+    background-color: deeppink;
+    
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        padding: 10px;
+    }
+}
+
+.menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 10px;
+}
