@@ -3,11 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import styles from "../css/Header.module.scss";
 
 const navItems = [
-  { to: "/", label: "家" },
-  { to: "/articles", label: "文章" },
-  { to: "/funny", label: "有趣的东西" },
-  { to: "/garden", label: "花园" },
-  { to: "/about", label: "关于" },
+  { to: "/", label: "Home" },
+  { to: "/articles", label: "Articles" },
+  { to: "/write", label: "Write" },
+  { to: "/funny", label: "Funny" },
+  { to: "/garden", label: "Garden" },
+  { to: "/about", label: "About" },
 ];
 
 export default function Header() {
@@ -33,8 +34,8 @@ export default function Header() {
             ))}
           </nav>
 
-          <button className={styles.mobileToggle} onClick={() => setOpen(true)} aria-label="打开菜单">
-            菜单
+          <button className={styles.mobileToggle} onClick={() => setOpen(true)} aria-label="Open menu">
+            Menu
           </button>
         </div>
       </header>
@@ -42,9 +43,9 @@ export default function Header() {
       <div className={`${styles.backdrop} ${open ? styles.show : ""}`} onClick={() => setOpen(false)} />
       <aside className={`${styles.drawer} ${open ? styles.show : ""}`}>
         <div className={styles.drawerHead}>
-          <span>导航</span>
-          <button onClick={() => setOpen(false)} aria-label="关闭菜单">
-            关闭
+          <span>Navigation</span>
+          <button onClick={() => setOpen(false)} aria-label="Close menu">
+            Close
           </button>
         </div>
         <nav className={styles.mobileNav}>

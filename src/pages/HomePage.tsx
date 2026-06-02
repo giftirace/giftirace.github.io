@@ -1,101 +1,119 @@
-﻿import { useEffect, useRef, useState } from "react";
-import About from "../components/About";
-import Card from "../components/Card";
-import CategoryCard from "../components/CategoryCard";
-import Hero from "../components/Hero";
+import { useEffect, useMemo, useState } from "react";
 import styles from "../css/HomePage.module.scss";
-import type { LocalPost } from "../types/post";
 import { getAllPosts } from "../utils/postData";
 
 function HomePage() {
-  const [posts, setPosts] = useState<LocalPost[]>([]);
-  const [allPosts, setAllPosts] = useState<LocalPost[]>([]);
-  const nextSectionRef = useRef<HTMLElement | null>(null);
+  const [allPosts, setAllPosts] = useState(() => getAllPosts());
 
   useEffect(() => {
-    const all = getAllPosts();
-    const latest = all.slice(0, 3);
-    setPosts(latest);
-    setAllPosts(all);
+    setAllPosts(getAllPosts());
   }, []);
 
-  const tags = Array.from(new Set(allPosts.flatMap((post) => post.tags))).slice(0, 8);
-  const categories = Array.from(new Set(allPosts.map((post) => post.category)));
+  const latestPosts = useMemo(() => allPosts.slice(0, 8), [allPosts]);
+
+  const categories = useMemo(
+    () =>
+      Array.from(
+        allPosts.reduce((map, post) => {
+          map.set(post.category, (map.get(post.category) ?? 0) + 1);
+          return map;
+        }, new Map<string, number>())
+      ).sort((a: [string, number], b: [string, number]) => b[1] - a[1]),
+    [allPosts]
+  );
+
+  const tags = useMemo(
+    () => Array.from(new Set(allPosts.flatMap((post) => post.tags))).slice(0, 24),
+    [allPosts]
+  );
+
   const latestDate = allPosts[0]?.date;
-  const topCategories = Array.from(
-    allPosts.reduce((map, post) => {
-      map.set(post.category, (map.get(post.category) ?? 0) + 1);
-      return map;
-    }, new Map<string, number>())
-  )
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
 
   return (
-    <>
-      <Hero nextSectionRef={nextSectionRef} />
+    <div className={styles.homeFrame}>
+      <section className={styles.heroPanel}>
+        <div className={styles.heroHeader}>
+          <span>My Blog</span>
+          <span>About, Email, IG</span>
+        </div>
 
-      <section ref={nextSectionRef} className={styles.sectionBlock}>
-        <h2 className={styles.latestPosts}>最新文章</h2>
-        <div className={styles.cardlist}>
-          {posts.length > 0 &&
-            posts.map((post) => (
-              <Card
-                key={post.slug}
-                title={post.title}
-                link={`/articles/${post.slug}`}
-                description={post.description}
-                date={new Date(post.date).toLocaleDateString()}
-              />
-            ))}
-          {posts.length === 0 && (
-            <div className={styles.emptyBlock}>
-              <p>还没有文章，去文章页上传 Markdown 即可开始。</p>
+        <div className={styles.heroMain}>
+          <h1>狡猾的老巢</h1>
+          <p>观察世界中</p>
+        </div>
+
+        <div className={styles.heroFooter}>
+          <p>From notes to stories,</p>
+          <p>keep writing and keep curious.</p>
+        </div>
+      </section>
+
+      <section className={styles.contentPanel}>
+        <div className={styles.contentInner}>
+          <article id="about" className={styles.block}>
+            <div className={styles.blockTitle}>关于我</div>
+            <div className={styles.blockBody}>
+              <p>
+                你好，我在这里记录技术、设计、生活和偶尔的灵光一闪。
+                这是我的数字花园，会持续生长。
+              </p>
+              <p className={styles.metaLine}>共 {allPosts.length} 篇文章 · 最近更新 {latestDate ? new Date(latestDate).toLocaleDateString() : "--"}</p>
             </div>
-          )}
-        </div>
-      </section>
+          </article>
 
-      <section className={`${styles.sectionBlock} ${styles.overview}`}>
-        <div className={styles.stat}>
-          <span>文章总数</span>
-          <strong>{allPosts.length}</strong>
-        </div>
-        <div className={styles.stat}>
-          <span>标签数量</span>
-          <strong>{new Set(allPosts.flatMap((post) => post.tags)).size}</strong>
-        </div>
-        <div className={styles.stat}>
-          <span>分类数量</span>
-          <strong>{categories.length}</strong>
-        </div>
-        <div className={styles.stat}>
-          <span>最近更新</span>
-          <strong className={styles.smallNumber}>{latestDate ? new Date(latestDate).toLocaleDateString() : "--"}</strong>
-        </div>
-        <div className={styles.tagCloud}>
-          {tags.length === 0 && <span>暂无标签</span>}
-          {tags.map((tag) => (
-            <span key={tag}>#{tag}</span>
-          ))}
-        </div>
-        <div className={styles.categoryCloud}>
-          {topCategories.length === 0 && <span>暂无分类</span>}
-          {topCategories.map(([name, count]) => (
-            <span key={name}>
-              {name} ({count})
-            </span>
-          ))}
-        </div>
-      </section>
+          <article id="articles" className={styles.block}>
+            <div className={styles.blockTitle}>文章列表</div>
+            <div className={styles.blockBody}>
+              {latestPosts.length === 0 ? (
+                <p>还没有文章，去文章页上传 Markdown 开始写作吧。</p>
+              ) : (
+                <ul className={styles.postList}>
+                  {latestPosts.map((post) => (
+                    <li key={post.slug}>
+                      <a href={`#/articles/${post.slug}`}>{post.title}</a>
+                      <span>{new Date(post.date).toLocaleDateString()}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
 
-      <section className={styles.sectionBlock}>
-        <CategoryCard />
+          <article id="categories" className={styles.block}>
+            <div className={styles.blockTitle}>分类</div>
+            <div className={styles.blockBody}>
+              {categories.length === 0 ? (
+                <p>暂无分类</p>
+              ) : (
+                <ul className={styles.categoryList}>
+                  {categories.map(([name, count]) => (
+                    <li key={name}>
+                      <span>{name}</span>
+                      <strong>{count}</strong>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+
+          <article className={styles.block}>
+            <div className={styles.blockTitle}>标签</div>
+            <div className={styles.blockBody}>
+              {tags.length === 0 ? (
+                <p>暂无标签</p>
+              ) : (
+                <div className={styles.tagList}>
+                  {tags.map((tag) => (
+                    <span key={tag}>#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        </div>
       </section>
-      <section className={styles.sectionBlock}>
-        <About />
-      </section>
-    </>
+    </div>
   );
 }
 
